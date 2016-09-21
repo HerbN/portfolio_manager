@@ -1,0 +1,93 @@
+%%===================================================================================
+%%
+%%    Description:  Functional specification for the market_data_grabber program.
+%%
+%%        Version:  0.1
+%%        Created:  09/19/2016
+%%       Revision:  none
+%%
+%%         Author:  Herbert Nowell (herb@herbertnowell.com) 
+%%   Organization:  
+%%      Copyright:  
+%%
+%%          Notes:  
+%%                
+%%===================================================================================
+
+\documentclass{report}
+
+\begin{document}
+\title{Market Data Grabber Functional Specification}
+\author{Herbert H. Nowell}
+
+\maketitle
+
+\section{About this Specification}
+
+This specification is a starting point for the development of Market Data
+Grabber 0.1 which will focus only on equity prices, splits and dividends, and
+equity index values.  As time goes on aspects will change.  At the outset I
+suspect the back end database will change many times for example.  While
+efforts will be made to keep the spec up to date at times code may lead the
+document.
+
+\section{Overview}
+
+Market data grabber is a component of the portfolio manager software suite.
+The name is open to change to something more manageable even if not more
+sonorous.
+
+\section{Major Features}
+
+\begin{itemize}
+    \item Download stock data including closes, highs and lows by days, splits, 
+          and dividends.  
+    \item It will be able to grab multiple stocks in one invocation and for 
+          multiple days.  
+    \item Will be able to download stocks on major indices as a whole: Russell, 
+          S\&P, and Dow.
+    \item Be driven by command line or configuration file.
+\end{itemize}
+
+\section{Design Goals}
+
+The biggest goal is a system that can be 100\% automated.  The principle purpose is
+overnight runs after market closes to support analysis runs.
+
+\section{Components}
+
+\begin{itemize}
+    \item Perl script - does all setup and retrieval
+    \item Database - Some form of SQL accessable DB including scripts to create
+          the DB.
+\end{itemize}
+
+\section{User Interface}
+
+The program will be a command line program, \texttt{market\_data\_grabber} written in
+Perl.  As its default it will take as its arguments a list of stock tickers.  If the
+ticker is for an index known to the program it will download all stocks associated
+with that index for the dates given.
+
+It will have the following command line switches:
+\begin{itemize}
+    \item {\texttt -h/--help} and {\texttt -v}: The former will also be automatically
+        invoked if the arguments given do not match those expected.
+
+    \item {\texttt --begin-date} and {\texttt --end-date}: If neither is used only 
+        the most recent business day prior to today is captured.  If the former only
+        is used the ranges begins on that day and ends on the most recent business
+        day.  The latter can only be used in conjunction with the former and sets 
+        the ending business day to be captured.
+
+    \item {\texttt --cfg-file} option that specifies the argument is a file listing 
+        what to download.  This will be a yaml file whose structure will be such that
+        it can include information on what to download about that stock, more or less
+        than the default, and set date ranges by ticker.
+\end{itemize}
+
+\end{document}
+
+
+
+
