@@ -1,7 +1,5 @@
 #============================================================================
 #
-#        USAGE: ./yahoo_scrape.pl  
-#
 #  DESCRIPTION: Utility routines for market data grabber.
 #
 # REQUIREMENTS: ---
